@@ -17,6 +17,7 @@ module.exports = function(n, ba){
 
   // 앞 태그
   six = six.replace(/> (.*)/g, "<blockquote>$1</blockquote>")
+  six = six.replace(/##([^#\n]*)/g, "")
   d('3: '+six)
 
   // 감싸는 태그
@@ -41,10 +42,11 @@ module.exports = function(n, ba){
   six = six.replace(/\[\[([^[[\]\]]*)]]/g, "<a href=\"/w/$1\">$1</a>") // 링크
   six = six.replace(/([^\n]*\.(jpeg|jpg|gif|png))/g, "<img src=\"$1\">") // 이미지
   six = six.replace(/\{{{([^]*)}}}/g, "<code>$1</code>") // 코드로 바꾸기만 지원
+  six = six.replace(/-{4,11}/g, "<hr>") // 수평선
   d('6: '+six)
 
   // 리스트
-  six = six.replace(/\s?\*\s([^\*]*)/g, "<li>$1</li>")
+  six = six.replace(/\s\*\s?([^\*]*)/g, "<li>$1</li>")
   //six = six.replace(/(<li>.*<\/li>)/g, "<ul>$1</ul>")
   d('7: '+six)
 
