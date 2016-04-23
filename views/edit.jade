@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  meta(name="opennamuedit", content=content)
   h1= title
   form#usrform(method='POST', action='/edit/#{title}')
       | 문서명: 
