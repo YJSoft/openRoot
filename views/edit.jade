@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1= title
+  form#usrform(method='POST', action='/edit/#{title}')
+      | 문서명: 
+      input(type='text', name='title', value=title)
+      input(type='submit', vaule='수정 완료')
+      br
+      textarea(rows='30', cols='100', name='content', form='usrform')= content

@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  a(href='/edit/#{title}') 수정하기
+    |  
+  a(href='/history/#{title}') 역사보기
+  h1= title
+  div!= content
