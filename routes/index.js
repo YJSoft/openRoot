@@ -50,7 +50,7 @@ router.post('/edit/:page', function(req, res) {
       content: ''
     }
   }
-  if(wiki.doc[req.body.title].canEdit && wiki.doc[req.body.title].canEdit === false) return;
+  if(!wiki.doc[req.body.title].canEdit) return;
   if(wiki.nick[ip]){
     wiki.doc[req.body.title].history.push(
       wiki.nick[ip]
