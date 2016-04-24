@@ -6,4 +6,5 @@ block content
   h1= title
   ul
     each val in history
-      li= val
+      li
+        a(href="/users/#{val}")= val

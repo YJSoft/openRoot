@@ -18,7 +18,7 @@ module.exports = function(n, ba){
   // 앞 태그
   six = six.replace(/> (.*)/g, "<blockquote>$1</blockquote>")
   six = six.replace(/##([^#\n]*)/g, "")
-  six = six.replace(/#redirect\s(.*)/g, "<meta http-equiv=\"refresh\" content=\"0;url="+wiki.url+"/w/$1\">")
+  six = six.replace(/#redirect\s(.*)/g, "<script type=\"text\/javascript\">window.location.href = \"http:\/\/"+wiki.url+"\/w\/$1\"<\/script>")
   d('3: '+six)
 
   // 감싸는 태그
