@@ -44,6 +44,7 @@ module.exports = function(n, ba){
   six = six.replace(/\[\[([^[\[\]]*)]]/g, "<a href=\"/w/$1\">$1</a>") // 링크
   six = six.replace(/([^\n]*\.(jpeg|jpg|gif|png))/g, "<img src=\"$1\">") // 이미지
   six = six.replace(/\{{{(.*)}}}/g, "<code>$1</code>") // 코드로 바꾸기만 지원
+  six = six.replace(/\{{{\|\s?([^\{\}\|]*)\s?\|}}}/g)
   six = six.replace(/-{4,11}/g, "<hr>") // 수평선
   d('6: '+six)
 
