@@ -31,12 +31,12 @@ module.exports = function(n, ba){
   d('4: '+six)
 
   // 제목들
-  six = six.replace(/======\s?([^=\s]*)\s?======/g, "<h6>$1</h6>")
-  six = six.replace(/=====\s?([^=\s]*)\s?=====/g, "<h5>$1</h5>")
-  six = six.replace(/====\s?([^=\s]*)\s?====/g, "<h4>$1</h4>")
-  six = six.replace(/===\s?([^=\s]*)\s?===/g, "<h3>$1</h3>")
-  six = six.replace(/==\s?([^=\s]*)\s?==/g, "<h2>$1</h2>")
-  six = six.replace(/=\s?([^=\s]*)\s?=/g, "<h1>$1</h1>")
+  six = six.replace(/======\s?([^=]*)\s?======/g, "<h6>$1</h6>")
+  six = six.replace(/=====\s?([^=]*)\s?=====/g, "<h5>$1</h5>")
+  six = six.replace(/====\s?([^=]*)\s?====/g, "<h4>$1</h4>")
+  six = six.replace(/===\s?([^=]*)\s?===/g, "<h3>$1</h3>")
+  six = six.replace(/==\s?([^=]*)\s?==/g, "<h2>$1</h2>")
+  six = six.replace(/=\s?([^=]*)\s?=/g, "<h1>$1</h1>")
   d('5: '+six)
 
   // 고급 태그
