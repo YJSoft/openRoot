@@ -24,14 +24,11 @@ rl.question('위키의 이름은 무엇인가요?', (answer) => {
         "content": "대문",
         "canEdit": true
       }
-      rl.question('(리다이렉트시 필수) URL은 무엇으로 하실 예정이세요?', (answer) => {
-        w.url = answer
-        jsonfile.writeFile('./wiki.json', w, {spaces: 2}, (err) => {
-          if(err) throw err;
-          console.log("모든 데이터가 성공적으로 저장되었습니다.");
-          process.exit()
-        })
-      });
+      jsonfile.writeFile('./wiki.json', w, {spaces: 2}, (err) => {
+        if(err) throw err;
+        console.log("모든 데이터가 성공적으로 저장되었습니다.");
+        process.exit()
+      })
     });
   });
 });
