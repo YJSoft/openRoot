@@ -16,7 +16,7 @@ router.get('/save', function(req, res) {
   res.redirect('/w/'+wiki.front)
 });
 router.post('/goto', function(req, res) {
-  res.redirect('/w/'+req.body.name)
+  res.redirect('/w/'+encodeURI(req.body.name))
 });
 router.get('/w/:page', function(req, res, next) {
   if(!wiki.doc[req.params.page] || !wiki.doc[req.params.page].content){
@@ -53,17 +53,22 @@ router.post('/edit/:page', function(req, res) {
       content: ''
     }
   }
+  const bytlenz = Buffer.byteLength(wiki.doc[req.body.title], 'utf8')+Buffer.byteLength(req.body.content, 'utf8')
+  const bytlen = " ("+bytlenz+")"
   if(!wiki.doc[req.body.title].canEdit) return;
   if(wiki.nick[ip]){
     wiki.doc[req.body.title].history.push(
-      wiki.nick[ip]
+      wiki.nick[ip]+bytlen
     )
   }else{
-    wiki.doc[req.body.title].history.push(ip)
+    wiki.doc[req.body.title].history.push(ip+bytlen)
   }
   wiki.user[wiki.nick[ip] || ip].lastEdit = req.body.title
 
   wiki.doc[req.body.title].content = req.body.content
+  if(wiki.doc[req.body.title] !== wiki.doc[req.params.title]){
+    wiki.doc[req.params.title] = null
+  }
   res.redirect('/w/'+encodeURI(req.params.page))
 });
 router.get('/history/:page', function(req, res) {

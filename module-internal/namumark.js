@@ -22,12 +22,13 @@ module.exports = function(n, ba){
   d('3: '+six)
 
   // 감싸는 태그
+  six = six.replace(/-{4,11}/g, "<hr>") // 수평선
   six = six.replace(/\'\'\'([^\']*)\'\'\'/g, "<strong>$1</strong>") // 강조, 굵게
   six = six.replace(/\'\'([^\']*)\'\'/g, "<em>$1</em>") // 이텔릭
   six = six.replace(/__([^_]*)__/g, "<u>$1</u>") // 밑줄
   six = six.replace(/--([^-]*)--|~~([^~]*)~~/g, "<del>$1</del>") // '''취소선'''
   six = six.replace(/\^\^([^\^]*)\^\^/g, "<sup>$1</sup>") // 위첨자
-  six = six.replace(/,,([^\,]),,/g, "<sub>$1</sub>") // 아래첨자
+  six = six.replace(/\,\,([^\,]*)\,\,/g, "<sub>$1</sub>") // 아래첨자
   d('4: '+six)
 
   // 제목들
@@ -43,9 +44,8 @@ module.exports = function(n, ba){
   six = six.replace(/\[\[([^\[\]]*)\|([^\[\]]*)]]/g, "<a href=\"/w/$1\">$2</a>") // 커스텀 이름의 링크
   six = six.replace(/\[\[([^[\[\]]*)]]/g, "<a href=\"/w/$1\">$1</a>") // 링크
   six = six.replace(/([^\n]*\.(jpeg|jpg|gif|png))/g, "<img src=\"$1\">") // 이미지
-  six = six.replace(/\{{{(.*)}}}/g, "<code>$1</code>") // 코드로 바꾸기만 지원
-  six = six.replace(/\{{{\|\s?([^\{\}\|]*)\s?\|}}}/g, "<table class=\"wiki-closure\"><tbody><tr><td><div class=\"wiki-indent\">$1<\/div><\/td><\/tr><\/tbody><\/table>")
-  six = six.replace(/-{4,11}/g, "<hr>") // 수평선
+  six = six.replace(/\{{{\|\s?([^\{\}\|]*)\s?\|}}}/g, "<table class=\"wiki-closure\"><tbody><tr><td><div class=\"wiki-indent border\">$1<\/div><\/td><\/tr><\/tbody><\/table>")
+  six = six.replace(/\{{{([^\{\}]*)}}}/g, "<code>$1</code>") // 코드로 바꾸기만 지원
   d('6: '+six)
 
   // 리스트

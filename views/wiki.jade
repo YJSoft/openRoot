@@ -3,9 +3,12 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/primer.css')
+    link(rel='shortcut icon', href='/images/on.png')
   body
     br
     .one-fifth.column
+      a(href='/')
+        img(src="/images/on2.png", width="100%")
       block menu
       form(method='POST', action='/goto')
         .input-group
