@@ -29,6 +29,14 @@ router.get('/w/:page', function(req, res, next) {
     res.end()
   })
 });
+router.get('/raw/:page', function(req, res) {
+  if(!wiki.doc[req.params.page] || !wiki.doc[req.params.page].content){
+    res.status(404).send("No Content")
+    res.end()
+    return;
+  }
+  res.status(200).send(wiki.doc[req.params.page].content)
+});
 router.get('/edit/:page', function(req, res) {
   if(!wiki.doc[req.params.page] || !wiki.doc[req.params.page].content){
     res.render('edit', { title: req.params.page, content: "뭔가를 해보세요." });
@@ -62,6 +70,11 @@ router.post('/edit/:page', function(req, res) {
     )
   }else{
     wiki.doc[req.body.title].history.push(ip+bytlen)
+  }
+  if(!wiki.user[wiki.nick[ip] || ip]){
+    wiki.user[wiki.nick[ip] || ip] = {
+      "lastEdit": ""
+    }
   }
   wiki.user[wiki.nick[ip] || ip].lastEdit = req.body.title
 
