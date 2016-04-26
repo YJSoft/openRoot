@@ -1,23 +1,11 @@
-extends layout
-
-block content
-  meta(name="opennamuedit", content=content)
-  h1= title
-  form#usrform(method='POST', action='/edit/#{title}')
-      | 문서명: 
-      input(type='text', name='title', value=title)
-      input(type='submit', vaule='수정 완료')
-      br
-      textarea(rows='30', cols='100', name='content', form='usrform')= content
-
 extends wiki
 block menu
   nav.menu
-    a.menu-item.selected(href='#', aria-label='문서의 내용을 읽습니다.') 문서보기
-    a.menu-item(href='/edit/#{title}', aria-label='관리자만 가능합니다.') 수정하기
+    a.menu-item(href='/w/#{title}', aria-label='문서의 내용을 읽습니다.') 문서보기
+    a.menu-item.selected(href='#', aria-label='관리자만 가능합니다.') 수정하기
     a.menu-item(href='/history/#{title}', aria-label="문서의 역사를 확인합니다.") 역사보기
 block content
-h1= title
+  h1= title
   form#usrform(method='POST', action='/edit/#{title}')
     dl.form-group
       dt
@@ -29,6 +17,6 @@ h1= title
         label(for="content") 내용
       dd
         textarea(rows='30', cols='100', name='content', form='usrform')= content
-    .form-actions
-      button.btn.btn-primary(type='submit') 수정 내용 저장하기
-      a.btn(type='button', href='/w/#{title}') 취소
+        .form-actions
+          button.btn.btn-primary(type='submit') 수정 내용 저장하기
+          a.btn(type='button', href='/w/#{title}') 취소
