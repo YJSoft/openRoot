@@ -1,4 +1,5 @@
 # openNAMU
+![https://raw.githubusercontent.com/teamatus/openNAMU/master/public/images/on2.png](오픈나무 로고)
 오픈소스 버전 the seed, **openNAMU** 입니다.
 ## ToDo
 - [x] 굵게, 위첨자 아래첨자 등 기본적 기능
