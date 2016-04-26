@@ -15,6 +15,9 @@ router.get('/save', function(req, res) {
   })
   res.redirect('/w/'+wiki.front)
 });
+router.post('/goto', function(req, res) {
+  res.redirect('/w/'+req.body.name)
+});
 router.get('/w/:page', function(req, res, next) {
   if(!wiki.doc[req.params.page] || !wiki.doc[req.params.page].content){
     res.status(404).render('index', { title: req.params.page, content: "404" });

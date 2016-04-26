@@ -1,10 +1,12 @@
-extends layout
-
+extends wiki
 block content
-  a(href='/w/#{title}') 돌아가기
-  a(href='/edit/#{title}') 수정하기
   h1= title
   ul
     each val in history
       li
         a(href="/users/#{val}")= val
+block menu
+  nav.menu
+    a.menu-item(href='/w/#{title}', aria-label='문서의 내용을 읽습니다.') 문서보기
+    a.menu-item(href='/edit/#{title}', aria-label='관리자만 가능합니다.') 수정하기
+    a.menu-item.selected(href='#', aria-label="문서의 역사를 확인합니다.") 역사보기
