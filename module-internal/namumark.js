@@ -18,7 +18,7 @@ module.exports = function(n, ba){
   // 앞 태그
   six = six.replace(/>\s([^\n]*)/g, "<blockquote>$1</blockquote>")
   six = six.replace(/##([^#\n]*)/g, "")
-  six = six.replace(/#redirect\s(.*)/g, "<script type=\"text\/javascript\">window.location.href = \"http:\/\/"+wiki.url+"\/w\/$1\"<\/script>")
+  six = six.replace(/#redirect\s(.*)/g, "<div class=\"flash\">[[$1]] 문서를 찾고 계신가요?</div>")
   d('3: '+six)
 
   // 감싸는 태그
@@ -37,7 +37,7 @@ module.exports = function(n, ba){
   six = six.replace(/====\s?([^=]*)\s?====/g, "<h4>$1</h4>")
   six = six.replace(/===\s?([^=]*)\s?===/g, "<h3>$1</h3>")
   six = six.replace(/==\s?([^=]*)\s?==/g, "<h2>$1</h2>")
-  six = six.replace(/=\s?([^=]*)\s?=/g, "<h1>$1</h1>")
+  six = six.replace(/[^s]=\s?([^=]*)\s?=/g, "<h1>$1</h1>")
   d('5: '+six)
 
   // 고급 태그

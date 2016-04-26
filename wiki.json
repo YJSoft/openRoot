@@ -91,14 +91,21 @@
       ],
       "content": "== 제목 2 ==\r\n=== 제목3 ===\r\n==== 제목 4 ====\r\n===== 제목5 =====\r\n====== 제목 6 ======\r\n'''굵게''' ''이텔릭'' __밑줄__ --취소선1-- --취소선2-- ^^위첨자^^ ,,아래첨자,,\r\n\r\n[[HelloWorld]] [[HelloWorld|대문]]\r\n--------\r\n{{{code.isCode = true}}} {{{| 글상자 |}}}"
     },
-    "undefined": null
+    "undefined": null,
+    "테스트으": {
+      "canEdit": true,
+      "history": [
+        "admin (34)"
+      ],
+      "content": "#redirect 테스트"
+    }
   },
   "nick": {
     "::ffff:127.0.0.1": "admin"
   },
   "user": {
     "admin": {
-      "lastEdit": "테스트"
+      "lastEdit": "테스트으"
     }
   },
   "include": {

@@ -67,7 +67,7 @@ router.post('/edit/:page', function(req, res) {
 
   wiki.doc[req.body.title].content = req.body.content
   if(wiki.doc[req.body.title] !== wiki.doc[req.params.title]){
-    wiki.doc[req.params.title] = null
+    wiki.doc[req.params.title] = null // 문서 이동 기능
   }
   res.redirect('/w/'+encodeURI(req.params.page))
 });
