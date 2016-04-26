@@ -8,6 +8,9 @@ var jsonfile = require('jsonfile');
 router.get('/', function(req, res, next) {
   res.redirect('/w/'+wiki.front)
 });
+router.get('/showall', function(req, res) {
+  res.render('showall', { doc: wiki.doc })
+});
 router.get('/save', function(req, res) {
   jsonfile.writeFile('./wiki.json', wiki, {spaces: 2}, (err) => {
     if(err) throw err;
@@ -15,8 +18,18 @@ router.get('/save', function(req, res) {
   })
   res.redirect('/w/'+wiki.front)
 });
-router.post('/goto', function(req, res) {
-  res.redirect('/w/'+encodeURI(req.body.name))
+router.post('/search', function(req, res) {
+  if(wiki.doc[req.body.name]){
+    res.redirect('/w/'+encodeURI(req.body.name))
+    return;
+  }
+  var dta = []
+  for(var property in wiki.doc){
+    if(property.includes(req.body.name) || wiki.doc[property].content.includes(req.body.name)){
+      dta.push(property)
+    }
+  }
+  res.render('search', { data: dta })
 });
 router.get('/w/:page', function(req, res, next) {
   if(!wiki.doc[req.params.page] || !wiki.doc[req.params.page].content){

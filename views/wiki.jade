@@ -10,9 +10,9 @@ html
       a(href='/')
         img(src="/images/on2.png", width="100%")
       block menu
-      form(method='POST', action='/goto')
+      form(method='POST', action='/search')
         .input-group
-          input.form-control(type='text', placeholder='문서명', name='name')
+          input.form-control(type='text', placeholder='문서명 또는 검색', name='name')
           span.input-group-button
             button.btn 검색
       br
