@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    .columns
+      .docs-layout.one-fifth.column
+        block menu
+        form(method='POST', action='/goto')
+          .input-group
+            input.form-control(type='text', placeholder='문서명', name='name')
+            span.input-group-button
+              button.btn >
+        br
+        | Powered by openNAMU
+    .four-fifths.column
+      block content
