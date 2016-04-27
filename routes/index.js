@@ -26,7 +26,7 @@ router.post('/search', function(req, res) {
   var dta = []
   for(var property in wiki.doc){
     if(property.includes(req.body.name) || wiki.doc[property].content.includes(req.body.name)){
-      dta.push(property)
+      dta.push(properity)
     }
   }
   res.render('search', { data: dta })

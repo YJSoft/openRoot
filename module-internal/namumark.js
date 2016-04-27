@@ -37,10 +37,12 @@ module.exports = function(n, ba){
   six = six.replace(/====\s?([^=]*)\s?====/g, "<h4>$1</h4>")
   six = six.replace(/===\s?([^=]*)\s?===/g, "<h3>$1</h3>")
   six = six.replace(/==\s?([^=]*)\s?==/g, "<h2>$1</h2>")
-  six = six.replace(/[^s]=\s?([^=]*)\s?=/g, "<h1>$1</h1>")
+  six = six.replace(/[^a-z]=\s?([^=]*)\s?=/g, "<h1>$1</h1>")
   d('5: '+six)
 
   // 고급 태그
+  six = six.replace(/\[\[(https?:\/\/[^\n가-힣ㄱ-ㅎ]*[^\n]*[^\[\]]*)\|([^\[\]]*)]]/g, "<a href=\"$1\">$2</a>") // 커스텀 이름의 다른 곳 링크
+  six = six.replace(/\[\[(https?:\/\/[^\n가-힣ㄱ-ㅎ]*[^\n]*[^[\[\]]*)]]/g, "<a href=\"$1\">$1</a>") // 다른 곳 링크
   six = six.replace(/\[\[([^\[\]]*)\|([^\[\]]*)]]/g, "<a href=\"/w/$1\">$2</a>") // 커스텀 이름의 링크
   six = six.replace(/\[\[([^[\[\]]*)]]/g, "<a href=\"/w/$1\">$1</a>") // 링크
   six = six.replace(/([^\n]*\.(jpeg|jpg|gif|png))/g, "<img src=\"$1\">") // 이미지

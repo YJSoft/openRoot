@@ -2,10 +2,10 @@
   "name": "openNAMU",
   "front": "HelloWorld",
   "saveSecond": 60,
-  "verbose": false,
+  "verbose": true,
   "doc": {
     "HelloWorld": {
-      "content": "이 문서는 대문입니다. [[Hello, world!]] 관련 정보를 찾으시는 분은 해당 문서로 가 주세요.\r\n== 개요 ==\r\n'''openNAMU'''. 이 프로젝트는 '''나무위키를 보지 않고 __직접 구현한__''' 코드를 사용합니다.\r\n== 문서 ==\r\n * [[베이직]]: 아빠이다.\r\n * [[Node.js]]: 뇌의 뉴런이다.",
+      "content": "이 문서는 대문입니다. [[Hello, world!]] 관련 정보를 찾으시는 분은 해당 문서로 가 주세요.\r\n== 개요 ==\r\n'''openNAMU'''. 이 프로젝트는 '''나무위키를 보지 않고 __직접 구현한__''' 코드를 사용합니다.\r\n== 문서 ==\r\n * [[베이직]]: 아빠이다.\r\n * 음\r\n * [[Node.js]]: 뇌의 뉴런이다.",
       "canEdit": true,
       "history": [
         "admin",
@@ -19,7 +19,11 @@
         "admin",
         "admin",
         "admin",
-        "admin"
+        "admin",
+        "admin (354)",
+        "admin (356)",
+        "admin (356)",
+        "admin (360)"
       ]
     },
     "베이직": {
@@ -86,9 +90,10 @@
     "테스트": {
       "canEdit": true,
       "history": [
-        "admin (307)"
+        "admin (307)",
+        "admin (1645)"
       ],
-      "content": "== 제목 2 ==\r\n=== 제목3 ===\r\n==== 제목 4 ====\r\n===== 제목5 =====\r\n====== 제목 6 ======\r\n'''굵게''' ''이텔릭'' __밑줄__ --취소선1-- --취소선2-- ^^위첨자^^ ,,아래첨자,,\r\n\r\n[[HelloWorld]] [[HelloWorld|대문]]\r\n--------\r\n{{{code.isCode = true}}} {{{| 글상자 |}}}"
+      "content": "== 제목 2 ==\r\n=== 제목3 ===\r\n==== 제목 4 ====\r\n===== 제목5 =====\r\n====== 제목 6 ======\r\n'''굵게''' ''이텔릭'' __밑줄__ --취소선1-- --취소선2-- ^^위첨자^^ ,,아래첨자,,\r\n\r\n[[HelloWorld]] [[HelloWorld|대문]]\r\n\r\n<div class=\"colorscripter-code\" style=\"color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; width:600px; position:relative !important; overflow:auto\"><table class=\"colorscripter-code-table\" style=\"margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;\" cellspacing=\"0\" cellpadding=\"0\"><tr><td style=\"padding:6px; border-right:2px solid #4f4f4f\"><div style=\"margin:0; padding:0; word-break:normal; text-align:right; color:#aaa; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%\"><div style=\"line-height:130%\">1</div></div></td><td style=\"padding:6px 0\"><div style=\"margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%\"><div style=\"padding:0 6px; white-space:pre; line-height:130%\"><span style=\"color:#ff3399\">public</span>&nbsp;<span style=\"color:#ff3399\">static</span>&nbsp;Image&nbsp;NoImage&nbsp;{&nbsp;get;&nbsp;}</div></div></td><td style=\"vertical-align:bottom; padding:0 2px 4px 0\"><a href=\"http://colorscripter.com/info#e\" target=\"_blank\" style=\"text-decoration:none; color:white\"><span style=\"font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px\">cs</span></a></td></tr></table></div>\r\n--------\r\n{{{code.isCode = true}}} {{{| 글상자 |}}}"
     },
     "테스트으": {
       "canEdit": true,
@@ -96,14 +101,15 @@
         "admin (34)"
       ],
       "content": "#redirect 테스트"
-    }
+    },
+    "undefined": null
   },
   "nick": {
     "::ffff:127.0.0.1": "admin"
   },
   "user": {
     "admin": {
-      "lastEdit": "테스트으"
+      "lastEdit": "테스트"
     }
   },
   "include": {
