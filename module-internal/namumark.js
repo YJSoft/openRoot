@@ -37,7 +37,6 @@ module.exports = function(n, ba){
   six = six.replace(/====\s?([^=]*)\s?====/g, "<h4>$1</h4>")
   six = six.replace(/===\s?([^=]*)\s?===/g, "<h3>$1</h3>")
   six = six.replace(/==\s?([^=]*)\s?==/g, "<h2>$1</h2>")
-  six = six.replace(/[^a-z]=\s?([^=]*)\s?=/g, "<h1>$1</h1>")
   d('5: '+six)
 
   // 고급 태그

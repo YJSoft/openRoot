@@ -1,0 +1,10 @@
+extends wiki
+block content
+  h1 모든 문서 보기
+  ul
+    - for(var property in doc)
+      li
+        a(href="/w/#{property}")= property
+block menu
+  nav.menu
+    a.menu-item(href='/', aria-label='문서의 내용을 읽습니다.') 대문으로
