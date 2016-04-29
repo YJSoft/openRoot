@@ -84,7 +84,7 @@ router.get('/edit/:page', function(req, res) {
 });
 router.post('/edit/:page', function(req, res) {
   //if(req.body.title === "GOODBYE-CODE-DELETE-HERE") process.exit(0)
-  var ip = forwarded(req, req.headers);
+  var ip = forwarded(req, req.headers).ip;
   if(!wiki.doc[req.body.title]){
     wiki.doc[req.body.title] = {
       canEdit: true,
@@ -128,14 +128,14 @@ router.get('/history/:page', function(req, res) {
   res.end()
 });
 router.get('/signin/:name', function(req, res) {
-  var ip = forwarded(req, req.headers);
+  var ip = forwarded(req, req.headers).ip;
   if(!req.params.name === "admin") {
     wiki.nick[ip] = req.params.name
   }
   res.redirect('/w/'+encodeURI(wiki.front))
 })
 router.get('/signout', function(req, res) {
-  var ip = forwarded(req, req.headers);
+  var ip = forwarded(req, req.headers).ip;
   wiki.nick[ip] = undefined
   res.redirect('/w/'+encodeURI(wiki.front))
 })

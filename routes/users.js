@@ -1,6 +1,7 @@
 var express = require('express');
 var wiki = require('../wiki');
 var router = express.Router();
+var forwarded = require('forwarded-for');
 
 /* GET users listing. */
 router.get('/:name', function(req, res, next) {
@@ -12,7 +13,7 @@ router.get('/:name', function(req, res, next) {
   }))
 });
 function getUser(req, cb) {
-  var ip = forwarded(req, req.headers);
+  var ip = forwarded(req, req.headers).ip;
   if(wiki.nick[ip]) cb(wiki.nick[ip])
   else cb(ip)
 }
