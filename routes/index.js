@@ -52,17 +52,25 @@ router.get('/raw/:page', function(req, res) {
 });
 router.get('/edit/:page', function(req, res) {
   if(!wiki.doc[req.params.page] || !wiki.doc[req.params.page].content){
-    res.render('edit', { title: req.params.page, content: "뭔가를 해보세요." });
+    res.render('edit', { title: req.params.page + " 문서 생성하기", content: "뭔가를 해보세요." });
     res.end()
     return;
   }
-  parseNamu(wiki.doc[req.params.page].content, (cnt) => {
-    res.render('edit', { title: req.params.page, content: wiki.doc[req.params.page].content });
-    res.end()
-  })
+  
+  if(wiki.doc[req.params.page].canEdit) {
+	  parseNamu(wiki.doc[req.params.page].content, (cnt) => {
+	    res.render('edit', { title: req.params.page + " 문서 편집하기", content: wiki.doc[req.params.page].content });
+	    res.end()
+	  })
+  } else {
+	  parseNamu(wiki.doc[req.params.page].content, (cnt) => {
+	    res.render('edit-readonly', { title: req.params.page + " 문서 원본 보기", content: wiki.doc[req.params.page].content });
+	    res.end()
+	  })
+  }
 });
 router.post('/edit/:page', function(req, res) {
-  if(req.body.title === "GOODBYE-CODE-DELETE-HERE") process.exit(0)
+  //if(req.body.title === "GOODBYE-CODE-DELETE-HERE") process.exit(0)
   var ip = ip ||
      req.connection.remoteAddress ||
      req.socket.remoteAddress ||
@@ -76,7 +84,10 @@ router.post('/edit/:page', function(req, res) {
   }
   const bytlenz = Buffer.byteLength(wiki.doc[req.body.title], 'utf8')+Buffer.byteLength(req.body.content, 'utf8')
   const bytlen = " ("+bytlenz+")"
-  if(!wiki.doc[req.body.title].canEdit) return;
+  if(!wiki.doc[req.body.title].canEdit) {
+	  res.redirect('/w/'+encodeURI(req.params.page));
+	  return;
+  }
   if(wiki.nick[ip]){
     wiki.doc[req.body.title].history.push(
       wiki.nick[ip]+bytlen
@@ -99,11 +110,11 @@ router.post('/edit/:page', function(req, res) {
 });
 router.get('/history/:page', function(req, res) {
   if(!wiki.doc[req.params.page].history){
-    res.render('history', { title: req.params.page, history: ["아직 아무도 손대지 않은 문서입니다!"] });
+    res.render('history', { title: req.params.page + " 문서의 역사", history: ["아직 아무도 손대지 않은 문서입니다!"] });
     res.end()
     return;
   }
-  res.render('history', { title: req.params.page, history: wiki.doc[req.params.page].history });
+  res.render('history', { title: req.params.page + " 문서의 역사", history: wiki.doc[req.params.page].history });
   res.end()
 });
 router.get('/signin/:name', function(req, res) {
