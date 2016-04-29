@@ -1,0 +1,3 @@
+[submodule "module-internal/php-namumark"]
+	path = module-internal/php-namumark
+	url = https://github.com/koreapyj/php-namumark
