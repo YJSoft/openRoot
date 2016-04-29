@@ -21,7 +21,7 @@ router.get('/history', function(req, res, next) {
 });
 
 router.get('/showall', function(req, res) {
-  res.render('showall', { doc: wiki.doc })
+  res.render('showall', { doc: wiki.doc, pagetitle: "모든 문서 보기" })
 });
 router.get('/save', function(req, res) {
   jsonfile.writeFile('./wiki.json', wiki, {spaces: 2}, (err) => {
