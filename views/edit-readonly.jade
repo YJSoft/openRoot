@@ -17,7 +17,7 @@ block content
       dt
         label(for="content") 내용
       dd
-        textarea(rows='30', cols='100', name='content', form='usrform', readonly='readonly')= content
+        textarea(rows='30', cols='100', name='content', form='usrform', disabled='disabled')= content
         .form-actions
-          button.btn.btn-primary(type='submit', disabled='disabled') 수정 내용 저장하기
+          button.btn.btn-primary(type='submit', disabled='disabled') 수정 권한이 없습니다
           a.btn(type='button', href='/w/#{title}') 취소

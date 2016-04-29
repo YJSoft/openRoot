@@ -33,18 +33,18 @@ router.post('/search', function(req, res) {
 });
 router.get('/w/:page', function(req, res, next) {
   if(!wiki.doc[req.params.page] || !wiki.doc[req.params.page].content){
-    res.status(404).render('index', { title: req.params.page, content: "404" });
+    res.status(404).render('index', { pagetitle: req.params.page + "(없는 문서) :: " + wiki.name, title: req.params.page, content: "404" });
     res.end()
     return;
   }
   parseNamu(wiki.doc[req.params.page].content, (cnt) => {
-    res.status(200).render('index', { title: req.params.page, content: cnt });
+    res.status(200).render('index', { pagetitle: req.params.page + " :: " + wiki.name, title: req.params.page, content: cnt });
     res.end()
   })
 });
 router.get('/raw/:page', function(req, res) {
   if(!wiki.doc[req.params.page] || !wiki.doc[req.params.page].content){
-    res.status(404).send("No Content")
+    res.status(404).send("")
     res.end()
     return;
   }
@@ -52,19 +52,19 @@ router.get('/raw/:page', function(req, res) {
 });
 router.get('/edit/:page', function(req, res) {
   if(!wiki.doc[req.params.page] || !wiki.doc[req.params.page].content){
-    res.render('edit', { title: req.params.page + " 문서 생성하기", content: "뭔가를 해보세요." });
+    res.render('edit', { pagetitle: req.params.page + " 문서 생성하기 :: " + wiki.name, title: req.params.page, content: "[[" + req.params.page + "]] 문서의 내용을 적으세요." });
     res.end()
     return;
   }
   
   if(wiki.doc[req.params.page].canEdit) {
 	  parseNamu(wiki.doc[req.params.page].content, (cnt) => {
-	    res.render('edit', { title: req.params.page + " 문서 편집하기", content: wiki.doc[req.params.page].content });
+	    res.render('edit', { pagetitle: req.params.page + " 문서 편집하기 :: " + wiki.name, title: req.params.page, content: wiki.doc[req.params.page].content });
 	    res.end()
 	  })
   } else {
 	  parseNamu(wiki.doc[req.params.page].content, (cnt) => {
-	    res.render('edit-readonly', { title: req.params.page + " 문서 원본 보기", content: wiki.doc[req.params.page].content });
+	    res.render('edit-readonly', { pagetitle: req.params.page + " 문서 원본 보기 :: " + wiki.name, title: req.params.page, content: wiki.doc[req.params.page].content });
 	    res.end()
 	  })
   }
@@ -110,11 +110,11 @@ router.post('/edit/:page', function(req, res) {
 });
 router.get('/history/:page', function(req, res) {
   if(!wiki.doc[req.params.page].history){
-    res.render('history', { title: req.params.page + " 문서의 역사", history: ["아직 아무도 손대지 않은 문서입니다!"] });
+    res.render('history', { pagetitle: req.params.page + " 문서의 역사 :: " + wiki.name, title: req.params.page, history: ["문서 역사가 없습니다."] });
     res.end()
     return;
   }
-  res.render('history', { title: req.params.page + " 문서의 역사", history: wiki.doc[req.params.page].history });
+  res.render('history', { pagetitle: req.params.page + " 문서의 역사 :: " + wiki.name, title: req.params.page, history: wiki.doc[req.params.page].history });
   res.end()
 });
 router.get('/signin/:name', function(req, res) {
@@ -125,7 +125,7 @@ router.get('/signin/:name', function(req, res) {
   if(!req.params.name === "admin") {
     wiki.nick[ip] = req.params.name
   }
-  res.redirect('/w/'+wiki.front)
+  res.redirect('/w/'+encodeURI(wiki.front))
 })
 router.get('/signout', function(req, res) {
   var ip = ip ||
@@ -133,7 +133,7 @@ router.get('/signout', function(req, res) {
      req.socket.remoteAddress ||
      req.connection.socket.remoteAddress;
   wiki.nick[ip] = undefined
-  res.redirect('/w/'+wiki.front)
+  res.redirect('/w/'+encodeURI(wiki.front))
 })
 process.on('exit', function(){
   jsonfile.writeFile('./wiki.json', wiki, {spaces: 2}, (err) => {
