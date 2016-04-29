@@ -6,3 +6,10 @@ ol.fn {
     list-style: none;
     padding-left: 0;
 }
+
+/* wiki font size css */
+.wiki-size-1{font-size:14pt;}
+.wiki-size-2{font-size:15pt;}
+.wiki-size-3{font-size:16pt;}
+.wiki-size-4{font-size:17pt;}
+.wiki-size-5{font-size:18pt;}
