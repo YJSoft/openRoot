@@ -12,10 +12,7 @@ router.get('/:name', function(req, res, next) {
   }))
 });
 function getUser(req, cb) {
-  var ip = ip ||
-     req.connection.remoteAddress ||
-     req.socket.remoteAddress ||
-     req.connection.socket.remoteAddress;
+  var ip = forwarded(req, req.headers);
   if(wiki.nick[ip]) cb(wiki.nick[ip])
   else cb(ip)
 }

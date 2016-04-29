@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var wiki = require('../wiki')
+var wiki = require('../wiki');
 var parseNamu = require('../module-internal/namumark')
 var jsonfile = require('jsonfile');
+var forwarded = require('forwarded-for');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -83,10 +84,7 @@ router.get('/edit/:page', function(req, res) {
 });
 router.post('/edit/:page', function(req, res) {
   //if(req.body.title === "GOODBYE-CODE-DELETE-HERE") process.exit(0)
-  var ip = ip ||
-     req.connection.remoteAddress ||
-     req.socket.remoteAddress ||
-     req.connection.socket.remoteAddress;
+  var ip = forwarded(req, req.headers);
   if(!wiki.doc[req.body.title]){
     wiki.doc[req.body.title] = {
       canEdit: true,
@@ -130,20 +128,14 @@ router.get('/history/:page', function(req, res) {
   res.end()
 });
 router.get('/signin/:name', function(req, res) {
-  var ip = ip ||
-     req.connection.remoteAddress ||
-     req.socket.remoteAddress ||
-     req.connection.socket.remoteAddress;
+  var ip = forwarded(req, req.headers);
   if(!req.params.name === "admin") {
     wiki.nick[ip] = req.params.name
   }
   res.redirect('/w/'+encodeURI(wiki.front))
 })
 router.get('/signout', function(req, res) {
-  var ip = ip ||
-     req.connection.remoteAddress ||
-     req.socket.remoteAddress ||
-     req.connection.socket.remoteAddress;
+  var ip = forwarded(req, req.headers);
   wiki.nick[ip] = undefined
   res.redirect('/w/'+encodeURI(wiki.front))
 })
