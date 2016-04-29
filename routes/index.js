@@ -8,6 +8,18 @@ var jsonfile = require('jsonfile');
 router.get('/', function(req, res, next) {
   res.redirect('/w/'+encodeURI(wiki.front))
 });
+
+//if no name supplied, redirect to main page
+router.get('/w', function(req, res, next) {
+  res.redirect('/w/'+encodeURI(wiki.front))
+});
+router.get('/edit', function(req, res, next) {
+  res.redirect('/w/'+encodeURI(wiki.front))
+});
+router.get('/history', function(req, res, next) {
+  res.redirect('/w/'+encodeURI(wiki.front))
+});
+
 router.get('/showall', function(req, res) {
   res.render('showall', { doc: wiki.doc })
 });
