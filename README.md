@@ -1,31 +1,14 @@
 # openNAMU
 ![오픈나무 로고](https://raw.githubusercontent.com/teamatus/openNAMU/master/public/images/on2.png)
 
-오픈소스 버전 the seed, **openNAMU** 입니다.
-## ToDo
-- [x] 굵게, 위첨자 아래첨자 등 기본적 기능
-- [x] 최소 XSS 방지
-- [x] 제목들
-- [x] 이미지 최소 구현
-- [x] 인용구 구현
-- [x] 수평선
-- [x] 주석
-- [x] 리다이렉트
-- [x] 글상자
-- [x] anchor
-- [ ] 완벽하게 리스트 구현
-- [ ] 표 구현
-- [ ] 틀 구현
-- [ ] 상위, 하위, 앵커 구현
-- [ ] 이미지 크기 조정
-- [ ] 하위 리스트
-- [ ] 번호 있는 리스트
-- [ ] 각주
+오픈소스 버전 the seed, **openNAMU**의 수정 fork입니다. [PHP 나무마크 파서](https://github.com/koreapyj/php-namumark)를 이용합니다. 해당하는 소스의 저작권 및 라이선스는 링크된 저장소에서 확인하실 수 있습니다.
+
+## 설치법
+`git clone https://github.com/YJSoft/openNAMU`로 저장소 파일을 받은 뒤 받은 저장소 폴더에서 `git submodule init`후 `git submodule update`로 코드를 받아오시면 됩니다.
 
 ## TIP / 참고하세요
-* HTML 코드는 `{{{#!html (HTML 코드) }}}` 처럼 작성하실 필요 없이 바로 입력하셔도 됩니다. ~~딱히 수정이 귀찮던 건 아닙니다.~~
-* 구조가 의외로 매우 간단합니다. 혹시라도 클래스 등의 출력되는 HTML 변경이 필요하시면 간단히 `namumark.js`를 커스텀하시면 됩니다.
-* `= 제목 =` 문법이 HTML과의 잦은 충돌로 인하여 더 이상 지원되지 않습니다.
+* 렌더링 부분은 PHP로 구현되어 있습니다. 따라서 PHP 실행 환경이 필요합니다.(웹서버는 필요치 않습니다)
+* PHP 나무마크 파서에서 지원하지 않는 문법은 정상 렌더링되지 않을 수 있습니다.
 * wiki.json을 수정하기 귀찮으시다면 `bin/setting`를 실행하시면 간단하게 셋팅하실 수 있습니다.
 * ~~개발자를 돕기 위해~~ 디버그가 필요하시다면 `npm run-script debug`를 실행하시면 디버깅을 하실 수 있습니다. 작동하지 않으면 `node ./bin/www --debug`를 바로 실행하셔도 좋습니다.
 * CSS 변경이 필요하시면 `public/stylesheets/style.css`를 변형하시거나, Pug (구 Jade) 사용법을 아시는 경우 `views/layout.jade`와 다른 파일을 변형하셔도 됩니다.
@@ -39,7 +22,7 @@
 * /signout - 닉네임을 제거합니다.
 
 ## 라이센스
-MIT 라이센스입니다.
+php-namumark submodule을 제외하고 MIT 라이센스입니다.
 ```
 Copyright (c) 2016 Jeon-Sung
 
