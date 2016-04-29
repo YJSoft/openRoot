@@ -22,7 +22,7 @@
 * /signout - 닉네임을 제거합니다.
 
 ## 라이센스
-php-namumark submodule을 제외하고 MIT 라이센스입니다.
+php-namumark submodule과 node 모듈을 제외하고 MIT 라이센스로 배포되고 있습니다.
 ```
 Copyright (c) 2016 Jeon-Sung
 
