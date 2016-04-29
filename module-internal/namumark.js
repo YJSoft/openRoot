@@ -1,9 +1,18 @@
 var wiki = require('../wiki');
+var execPhp = require('exec-php');
+
 module.exports = function(n, ba){
   var d = doNothing
   if(wiki.verbose) d = console.log
   var six = n
-
+	  
+  execPhp('namumark.php', function(error, php, outprint){ 
+      php.render(n.replace(/\r\n/g, "<BR>"), function(err, result, output, printed){
+          ba(result);
+      });
+  });
+  
+  /*
   // XSS 방지
   six = six.replace(/<script>|<\/script>/g, "")
   six = six.replace(/<(.*) on(.*)="(.*)">/g, "")
@@ -62,5 +71,6 @@ module.exports = function(n, ba){
 
 
   ba(six) // My name
+  */
 }
 function doNothing(a) {}

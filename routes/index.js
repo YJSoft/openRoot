@@ -6,7 +6,7 @@ var jsonfile = require('jsonfile');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.redirect('/w/'+wiki.front)
+  res.redirect('/w/'+encodeURI(wiki.front))
 });
 router.get('/showall', function(req, res) {
   res.render('showall', { doc: wiki.doc })
@@ -16,7 +16,7 @@ router.get('/save', function(req, res) {
     if(err) throw err;
     console.log("Data saved.");
   })
-  res.redirect('/w/'+wiki.front)
+  res.redirect('/w/'+encodeURI(wiki.front))
 });
 router.post('/search', function(req, res) {
   if(wiki.doc[req.body.name]){
