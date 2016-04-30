@@ -71,31 +71,23 @@ router.get('/raw/:page', function(req, res) {
 	
 });
 router.get('/edit/:page', function(req, res) {
-	res.status(403).render('index', { pagetitle: "미구현 기능 :: " + wiki.name, title: "Sorry!", content: "수정하기는 아직 구현되지 않은 기능입니다." });
-	res.end()
-	/*
-	if(!wiki.doc[req.params.page] || !wiki.doc[req.params.page].content){
-		res.render('edit', { pagetitle: req.params.page + " 문서 생성하기 :: " + wiki.name, title: req.params.page, content: "[[" + req.params.page + "]] 문서의 내용을 적으세요." });
-		res.end()
-		return;
-	}
-  
-	if(wiki.doc[req.params.page].canEdit) {
-		parseNamu(wiki.doc[req.params.page].content, (cnt) => {
-			res.render('edit', { pagetitle: req.params.page + " 문서 편집하기 :: " + wiki.name, title: req.params.page, content: wiki.doc[req.params.page].content });
+	wikiPageHandler.getArticle(req.params.page, function(result,wikiPage) {
+		if(result != 200){
+			res.render('edit', { pagetitle: req.params.page + " 문서 생성하기 :: " + wiki.name, title: req.params.page, content: "[[" + req.params.page + "]] 문서의 내용을 적으세요." });
 			res.end()
-		})
-	} else {
-		parseNamu(wiki.doc[req.params.page].content, (cnt) => {
-			res.render('edit-readonly', { pagetitle: req.params.page + " 문서 원본 보기 :: " + wiki.name, title: req.params.page, content: wiki.doc[req.params.page].content });
-			res.end()
-		})
-	}
-	*/
+		} else {
+			if(wikiPage.canEdit) {
+				res.render('edit', { pagetitle: req.params.page + " 문서 편집하기 :: " + wiki.name, title: req.params.page, content: wikiPage.content });
+				res.end()
+			} else {
+				res.render('edit-readonly', { pagetitle: req.params.page + " 문서 원본 보기 :: " + wiki.name, title: req.params.page, content: wikiPage.content });
+				res.end()
+			}
+		}
+	});
 });
 router.post('/edit/:page', function(req, res) {
-	res.status(403).render('index', { pagetitle: "미구현 기능 :: " + wiki.name, title: "Sorry!", content: "수정하기는 아직 구현되지 않은 기능입니다." });
-	res.end()
+	res.redirect('/w/'+encodeURI(req.params.page));
 	/*
 	//if(req.body.title === "GOODBYE-CODE-DELETE-HERE") process.exit(0)
 	var ip = forwarded(req, req.headers).ip;

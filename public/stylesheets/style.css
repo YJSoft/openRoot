@@ -1,5 +1,5 @@
 ul, ol {
-    padding-left: 2em;
+    padding-left: 2rem;
 }
 
 ol.fn {
@@ -13,3 +13,7 @@ ol.fn {
 .wiki-size-3{font-size:16pt;}
 .wiki-size-4{font-size:17pt;}
 .wiki-size-5{font-size:18pt;}
+
+#toc .indent {
+    margin-left: 1rem;
+}

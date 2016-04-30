@@ -28,6 +28,7 @@
 
 var wiki = require('../wiki');
 var mysql = require('mysql');
+var atob = require('atob');
 var btoa = require('btoa');
 
 var pool = mysql.createPool({
@@ -45,7 +46,7 @@ exports.getArticle = function(name,callback) {
 		if(err || typeof connection == "undefined") {
 			callback(502,null);
 		} else {
-			connection.query('select * from `wiki_articles` where `article_hash` = ' + connection.escape(btoa(name)), function(err, rows, fields) {
+			connection.query('select * from `wiki_articles` where `article_hash` = ' + connection.escape(btoa(unescape(encodeURIComponent(name)))), function(err, rows, fields) {
 				connection.release();
 				
 				var article = rows[0];
@@ -53,10 +54,22 @@ exports.getArticle = function(name,callback) {
 				if(err || typeof article == "undefined") {
 					callback(404,null);
 				} else {
+					if(article.article_etc_info != "") {
+						var wikiCommands = article.article_etc_info.match(/wikiPage\.([a-zA-Z_\-]+)=([a-zA-Z_\-]+);/g);
+						
+						wikiCommands.forEach(function(wikiCommand) {
+							try {
+							    eval(wikiCommand);
+							} catch (e) {
+							    console.log(name + "'s article_etc_info contains invalid info - " + wikiCommand);
+							}
+						})
+						
+					}
 					wikiPage.title = article.article_title;
 					wikiPage.content = article.article_content;
 					wikiPage.lastEdit = article.article_last_edit_time;
-		
+					
 					callback(200,wikiPage);
 				}
 			});
