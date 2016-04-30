@@ -133,6 +133,33 @@ router.post('/edit/:page', function(req, res) {
 	res.redirect('/w/'+encodeURI(req.params.page))
 	*/
 });
+
+//일단 지정만 해둠
+router.get('/move/:page', function(req, res) {
+	res.status(403).render('index', { pagetitle: "미구현 기능 :: " + wiki.name, title: "Sorry!", content: "이동하기는 아직 구현되지 않은 기능입니다." });
+	res.end()
+});
+router.post('/move/:page', function(req, res) {
+	res.status(403).render('index', { pagetitle: "미구현 기능 :: " + wiki.name, title: "Sorry!", content: "이동하기는 아직 구현되지 않은 기능입니다." });
+	res.end()
+});
+router.get('/delete/:page', function(req, res) {
+	res.status(403).render('index', { pagetitle: "미구현 기능 :: " + wiki.name, title: "Sorry!", content: "삭제하기는 아직 구현되지 않은 기능입니다." });
+	res.end()
+});
+router.post('/delete/:page', function(req, res) {
+	res.status(403).render('index', { pagetitle: "미구현 기능 :: " + wiki.name, title: "Sorry!", content: "삭제하기는 아직 구현되지 않은 기능입니다." });
+	res.end()
+});
+router.get('/acl/:page', function(req, res) {
+	res.status(403).render('index', { pagetitle: "미구현 기능 :: " + wiki.name, title: "Sorry!", content: "ACL 수정은 아직 구현되지 않은 기능입니다." });
+	res.end()
+});
+router.post('/acl/:page', function(req, res) {
+	res.status(403).render('index', { pagetitle: "미구현 기능 :: " + wiki.name, title: "Sorry!", content: "ACL 수정은 아직 구현되지 않은 기능입니다." });
+	res.end()
+});
+
 router.get('/history/:page', function(req, res) {
 	res.status(403).render('index', { pagetitle: "미구현 기능 :: " + wiki.name, title: "Sorry!", content: "문서 역사보기는 아직 구현되지 않은 기능입니다." });
 	res.end()
