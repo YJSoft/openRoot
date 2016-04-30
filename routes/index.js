@@ -18,7 +18,7 @@ router.get('/save', function(req, res) {
     if(err) throw err;
     console.log("Data saved.");
   })
-  res.redirect('/w/'+wiki.front)
+  res.redirect('/w/'+encodeURI(wiki.front))
 });
 // 검색 결과를 보여줍니다.
 router.post('/search', function(req, res) {
@@ -123,7 +123,7 @@ router.get('/signin/:name', function(req, res) {
   if(!req.params.name === "admin") {
     wiki.nick[ip] = req.params.name
   }
-  res.redirect('/w/'+wiki.front)
+  res.redirect('/w/'+encodeURI(wiki.front))
 })
 // 등록한 아이피를 삭제합니다.
 router.get('/signout', function(req, res) {
@@ -132,7 +132,7 @@ router.get('/signout', function(req, res) {
      req.socket.remoteAddress ||
      req.connection.socket.remoteAddress;
   delete wiki.nick[ip] // 등록된 nick를 삭제합니다.
-  res.redirect('/w/'+wiki.front)
+  res.redirect('/w/'+encodeURI(wiki.front))
 })
 process.on('exit', function(){
   jsonfile.writeFile('./wiki.json', wiki, {spaces: 2}, (err) => {
