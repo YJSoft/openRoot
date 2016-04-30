@@ -6,7 +6,7 @@ var jsonfile = require('jsonfile');
 
 // 대문으로 이동합니다.
 router.get('/', function(req, res, next) {
-  res.redirect('/w/'+wiki.front)
+  res.redirect('/w/'+encodeURI(wiki.front))
 });
 // 모든 문서를 보여줍니다.
 router.get('/showall', function(req, res) {
