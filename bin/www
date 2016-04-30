@@ -9,6 +9,7 @@ var debug = require('debug')('openNAMU:server');
 var http = require('http');
 var wiki = require('../wiki');
 var jsonfile = require('jsonfile');
+var schedule = require('node-schedule');
 
 /**
  * Get port from environment and store in Express.
@@ -96,6 +97,16 @@ setInterval(() => {
     console.log("Task -- Data saved.");
   })
 }, 1000*wiki.saveSecond)
+
+if(wiki.backup.use){
+ var j = schedule.scheduleJob('0 0 * * *', function(){
+   jsonfile.writeFile('../backup/'+Time.now(), wiki, {spaces: 2}, (err) => {
+     if(err) throw err;
+     console.log("Task -- Backup Success.");
+   })
+ });
+}
+
 process.on('exit', function(){
 
 })
