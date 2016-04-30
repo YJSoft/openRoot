@@ -1,7 +1,7 @@
-# openNAMU
+# openNAMU-mysql
 ![오픈나무 로고](https://raw.githubusercontent.com/teamatus/openNAMU/master/public/images/on2.png)
 
-오픈소스 버전 the seed, **openNAMU**의 수정 fork입니다. [PHP 나무마크 파서](https://github.com/koreapyj/php-namumark)를 이용합니다. 해당하는 소스의 저작권 및 라이선스는 링크된 저장소에서 확인하실 수 있습니다.
+오픈소스 버전 the seed, **openNAMU**의 MySQL 지원 fork입니다. 임시로 [PHP 나무마크 파서](https://github.com/koreapyj/php-namumark)를 이용합니다. 해당하는 소스의 저작권 및 라이선스는 링크된 저장소에서 확인하실 수 있습니다.
 
 ## 설치법
 `git clone https://github.com/YJSoft/openNAMU`로 저장소 파일을 받은 뒤 받은 저장소 폴더에서 `git submodule init`후 `git submodule update`로 코드를 받아오시면 됩니다. 이후 `wiki.default.json` 파일의 이름을 `wiki.json`으로 변경해 주세요.
