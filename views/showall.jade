@@ -2,7 +2,7 @@ extends wiki
 block content
   h1 모든 문서 보기
   ul
-    - for(var property in doc)
+    - each property in doc
       li
         a(href="/w/#{property}")= property
 block menu

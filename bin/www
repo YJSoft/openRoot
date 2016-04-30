@@ -90,12 +90,6 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
-setInterval(() => {
-  jsonfile.writeFile('./wiki.json', wiki, {spaces: 2}, (err) => {
-    if(err) throw err;
-    console.log("Task -- Data saved.");
-  })
-}, 1000*wiki.saveSecond)
 process.on('exit', function(){
 
 })

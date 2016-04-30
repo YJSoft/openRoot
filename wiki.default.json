@@ -4,28 +4,8 @@
   "saveSecond": 30,
   "verbose": false,
   "url": "opennamu.app",
-  "doc": {
-    "대문": {
-      "history": [
-        "::1 (1)"
-      ],
-      "content": "대문",
-      "canEdit": true
-    },
-  "nick": {
-    "::ffff:127.0.0.1": "Admin",
-	"127.0.0.1": "Admin",
-	"::1": "Admin"
-  },
-  "user": {
-    "::1": {
-      "lastEdit": "대문"
-    },
-    "::ffff:127.0.0.1": {
-      "lastEdit": "대문"
-    },
-  },
-  "include": {
-    "안녕": "안녕하세요"
-  }
+  "dbhost": "127.0.0.1",
+  "dbuser": "opennamu",
+  "dbpassword": "supersecret",
+  "dbname": "opennamu"
 }
