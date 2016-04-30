@@ -46,7 +46,7 @@ module.exports = function(n, ba){
   six = six.replace(/\[\[([^[\[\]]*)]]/g, "<a href=\"/w/$1\">$1</a>") // 링크
   six = six.replace(/([^\n]*\.(jpeg|jpg|gif|png))/g, "<img src=\"$1\">") // 이미지
   six = six.replace(/\{{{\|\s?([^\{\}\|]*)\s?\|}}}/g, "<table class=\"wiki-closure\"><tbody><tr><td><div class=\"wiki-indent border\">$1<\/div><\/td><\/tr><\/tbody><\/table>")
-  six = six.replace(/\{{{([^가-힣]*)}}}/g, "<code>$1</code>") // 코드로 바꾸기만 지원
+  six = six.replace(/\{{{(((?!{{{).)*)}}}/g, "<code>$1</code>") // 코드로 바꾸기만 지원
   d('6: '+six)
 
   // 리스트
