@@ -27,10 +27,17 @@ router.get('/showall', function(req, res) {
 		res.render('showall', { doc: pageList, pagetitle: "모든 문서 보기 :: " + wiki.name })
 	});
 });
+
+//wiki page is saved instantly so there's no need to save
 router.get('/save', function(req, res) {
 	res.redirect('/w/'+encodeURI(wiki.front))
 });
+
 router.post('/search', function(req, res) {
+	res.redirect('/w/'+encodeURI(wiki.front))
+	return;
+	
+	/*
 	if(wiki.doc[req.body.name]){
 		res.redirect('/w/'+encodeURI(req.body.name))
 		return;
@@ -42,6 +49,7 @@ router.post('/search', function(req, res) {
 		}
 	}
 	res.render('search', { data: dta })
+	*/
 });
 router.get('/w/:page', function(req, res, next) {
 	wikiPageHandler.getArticle(req.params.page, function(result,wikiPage) {
@@ -87,7 +95,22 @@ router.get('/edit/:page', function(req, res) {
 	});
 });
 router.post('/edit/:page', function(req, res) {
-	res.redirect('/w/'+encodeURI(req.params.page));
+	var ip = forwarded(req, req.headers).ip;
+	
+	//@TODO add comment input
+	//@TODO add success message
+	wikiPageHandler.saveArticle(req.params.page, ip, req.body.content, "edit page " + req.params.page, function(result) {
+		if(result.code != 200){
+		    res.status(result.code);
+		    res.render('error', {
+		      message: result.message,
+		      error: result.error
+		    });
+		} else {
+			res.redirect('/w/'+encodeURI(req.params.page));
+		}
+	});
+	
 	/*
 	//if(req.body.title === "GOODBYE-CODE-DELETE-HERE") process.exit(0)
 	var ip = forwarded(req, req.headers).ip;

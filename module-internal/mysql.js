@@ -30,6 +30,7 @@ var wiki = require('../wiki');
 var mysql = require('mysql');
 var atob = require('atob');
 var btoa = require('btoa');
+var forwarded = require('forwarded-for');
 
 var pool = mysql.createPool({
 	connectionLimit : 10,
@@ -97,8 +98,78 @@ exports.getArticleList = function(callback) {
 	});
 }
 
-exports.saveArticle = function(name, wikiText,callback) {
-	//save article here
+exports.saveArticle = function(name, ip, wikiText, wikiComment,callback) {
+	var wikiPage = new Object();
+	var result = new Object();
+	
+	pool.getConnection(function(err, connection) {
+		if(err || typeof connection == "undefined") {
+			result.code = 502;
+			result.message = "DB 서버와 연결할 수 없습니다.";
+			result.error = err;
+			callback(result);
+		} else {
+			connection.query('select * from `wiki_articles` where `article_hash` = ' + connection.escape(btoa(unescape(encodeURIComponent(name)))), function(err, rows, fields) {
+				var article = rows[0];
+				
+				if(typeof article != "undefined") {
+					var wikiCommands = article.article_etc_info.match(/wikiPage\.([a-zA-Z_\-]+)=([a-zA-Z_\-]+);/g);
+				
+					wikiCommands.forEach(function(wikiCommand) {
+						try {
+						    eval(wikiCommand);
+						} catch (e) {
+						    console.log(name + "'s article_etc_info contains invalid info - " + wikiCommand);
+						}
+					})
+				
+					if(!wikiPage.canEdit) {
+						result.code = 403;
+						result.message = "편집 권한이 없습니다.";
+						callback(result);
+					}
+				}
+				
+				if(err || typeof article == "undefined") {
+					//article create
+					result.code = 502;
+					result.message = "문서 생성은 구현되지 않았습니다.";
+					callback(result);
+				} else {
+					//article edit
+					connection.query('SELECT MAX(revision_num) as revision FROM wiki_revision',function(err, rows, fields) {
+						var revision = rows[0].revision;
+						connection.query('update `wiki_articles` set `revision_num` = ?, `article_content` = ?, `article_last_ip` = ? where `article_hash` = ' + connection.escape(btoa(unescape(encodeURIComponent(name)))),
+						[revision + 1, wikiText, ip],
+						function(err, rows, fields) {
+							if(err) {
+								result.code = 500;
+								result.message = "문서를 업데이트할 수 없습니다"
+								result.error = err;
+								callback(result);
+							}
+							connection.query('insert into wiki_revision (`revision_num`,`revision_article_num`,`revision_title`,`revision_hash`,`revision_content`,`revision_comment`,`revision_ip`) values (?,?,?,?,?,?,?)',
+							[revision + 1, article.article_num, article.article_title, article.article_hash, wikiText, wikiComment, ip],
+							function(err, rows, fields) {
+								connection.release();
+							
+								if(err) {
+									result.code = 500;
+									result.message = "리비전을 업데이트할 수 없습니다";
+									result.error = err;
+									callback(result);
+								} else {
+									result.code = 200;
+									result.message = "success";
+									callback(result);
+								}
+							});
+						});
+					});
+				}
+			});
+		}
+	});
 }
 
 exports.searchArticle = function(squery,callback) {
