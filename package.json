@@ -1,20 +1,42 @@
 {
-  "name": "openNAMU",
-  "version": "0.0.1-alpha",
+  "name": "opennamu-mysql",
+  "version": "0.0.2-alpha",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
     "debug": "node ./bin/www --debug"
   },
   "dependencies": {
+    "atob": "^2.0.3",
     "body-parser": "~1.13.2",
+    "btoa": "^1.1.2",
     "cookie-parser": "~1.3.5",
     "debug": "~2.2.0",
+    "exec-php": "0.0.3",
     "express": "~4.13.1",
     "forwarded-for": "^1.0.1",
     "jade": "~1.11.0",
     "jsonfile": "^2.3.0",
     "morgan": "~1.6.1",
+    "mysql": "^2.10.2",
     "serve-favicon": "~2.3.0"
-  }
+  },
+  "description": "![오픈나무 로고](https://raw.githubusercontent.com/teamatus/openNAMU/master/public/images/on2.png)",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YJSoft/openNAMU.git"
+  },
+  "keywords": [
+    "opennamu",
+    "namu",
+    "theseed"
+  ],
+  "author": "Jeon-Sung",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/YJSoft/openNAMU/issues"
+  },
+  "homepage": "https://github.com/YJSoft/openNAMU#readme"
 }
