@@ -125,7 +125,10 @@ exports.saveArticle = function(name, ip, wikiText, wikiComment,callback) {
 				
 					if(!wikiPage.canEdit) {
 						result.code = 403;
-						result.message = "편집 권한이 없습니다.";
+						result.message = "권한 없음";
+						result.error = new Object();
+						result.error.status = "문서 편집 권한이 없습니다.";
+						result.error.stack = "";
 						callback(result);
 					}
 				}
@@ -133,7 +136,10 @@ exports.saveArticle = function(name, ip, wikiText, wikiComment,callback) {
 				if(err || typeof article == "undefined") {
 					//article create
 					result.code = 502;
-					result.message = "문서 생성은 구현되지 않았습니다.";
+					result.message = "문서 생성 오류";
+					result.error = new Object();
+					result.error.status = "문서 생성은 구현되지 않았습니다.";
+					result.error.stack = "";
 					callback(result);
 				} else {
 					//article edit
