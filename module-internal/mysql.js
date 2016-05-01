@@ -197,9 +197,60 @@ exports.searchArticle = function(squery,callback) {
 }
 
 exports.getArticleHistory = function(name,callback) {
-	//get article history here
+	var wikiHistoryList = [];
+	
+	pool.getConnection(function(err, connection) {
+		if(err || typeof connection == "undefined") {
+			callback(502,null);
+		} else {
+			connection.query('select * from `wiki_revision` where `revision_hash` = ?',
+			[btoa(unescape(encodeURIComponent(name)))],
+			function(err, rows, fields) {
+				connection.release();
+				
+				var i = 1;
+				rows.forEach(function(revision) {
+					var rev = new Object();
+					rev.rev = i;
+					rev.ip = revision.revision_ip;
+					rev.rev_id = revision.revision_num;
+					rev.page = revision.revision_title;
+					rev.comment = revision.revision_comment;
+					wikiHistoryList.push(rev);
+					
+					i++;
+				});
+				
+				callback(200,wikiHistoryList);
+			});
+		}
+	});
 }
 
 exports.getArticleRevision = function(name,rev,callback) {
-	//get article revision here
+	var wikiPage = new Object();
+	
+	pool.getConnection(function(err, connection) {
+		if(err || typeof connection == "undefined") {
+			callback(502,null);
+		} else {
+			connection.query('select * from `wiki_revision` where `revision_num` = ?',
+			[rev],
+			function(err, rows, fields) {
+				connection.release();
+				var article = rows[0];
+		
+				if(err || typeof article == "undefined") {
+					callback(404,null);
+				} else {
+					wikiPage.rev = rev;
+					wikiPage.title = article.revision_title;
+					wikiPage.content = article.revision_content;
+					wikiPage.lastEdit = article.revision_edit_time;
+					
+					callback(200,wikiPage);
+				}
+			});
+		}
+	});
 }

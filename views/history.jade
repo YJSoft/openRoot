@@ -1,10 +1,19 @@
 extends wiki
 block content
   h1= title
-  ul
+  table(border='1')
+    thead
+      tr
+        th(style="padding:10px") 번호
+        th(style="padding:10px") 코멘트
+        th(style="padding:10px") 편집자
+    tbody
     each val in history
-      li
-        a(href="/users/#{val}")= val
+      tr
+        th(style="padding:10px")
+          a(href="/w/#{val.page}/#{val.rev_id}") r#{val.rev}
+        th(style="padding:10px") #{val.comment}
+        th(style="padding:10px") #{val.ip}
 block menu
   nav.menu
     a.menu-item(href='/w/#{title}', aria-label='문서의 내용을 읽습니다.') 문서보기

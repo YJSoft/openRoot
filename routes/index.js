@@ -176,18 +176,30 @@ router.post('/acl/:page', function(req, res) {
 });
 
 router.get('/history/:page', function(req, res) {
-	res.status(403).render('index', { pagetitle: "미구현 기능 :: " + wiki.name, title: "Sorry!", content: "문서 역사보기는 아직 구현되지 않은 기능입니다." });
-	res.end()
-	/*
-	if(!wiki.doc[req.params.page].history){
-		res.render('history', { pagetitle: req.params.page + " 문서의 역사 :: " + wiki.name, title: req.params.page, history: ["문서 역사가 없습니다."] });
+	wikiPageHandler.getArticleHistory(req.params.page, function(result,historyList) {
+		res.render('history', { pagetitle: req.params.page + " 문서의 역사 :: " + wiki.name, title: req.params.page, history: historyList });
 		res.end()
-		return;
-	}
-	res.render('history', { pagetitle: req.params.page + " 문서의 역사 :: " + wiki.name, title: req.params.page, history: wiki.doc[req.params.page].history });
-	res.end()
-	*/
+	});
 });
+
+// 특정 리비전 보기 페이지
+router.get('/w/:page/:revision', function(req, res) {
+	wikiPageHandler.getArticleRevision(req.params.page, req.params.revision, function(result,wikiPage) {
+		if(result == 404){
+			res.status(result).render('index', { pagetitle: req.params.page + "(없는 문서) :: " + wiki.name, title: req.params.page, content: result });
+			res.end()
+		} else if(result == 502){
+			res.status(result).render('index', { pagetitle: "시스템 오류 :: " + wiki.name, title: req.params.page, content: "DB서버 연결 실패" });
+			res.end()
+		} else {
+			parseNamu(wikiPage.content, (cnt) => {
+				res.status(result).render('index', { pagetitle: wikiPage.title + "(버전 " + req.params.revision + ") :: " + wiki.name, title: wikiPage.title, content: cnt });
+				res.end()
+			});
+		}
+	});
+});
+
 router.get('/signin/:name', function(req, res) {
 	res.status(403).render('index', { pagetitle: "지원 중단 :: " + wiki.name, title: "Sorry!", content: "해당 기능은 MySQL 포크에서는 지원 중단되었습니다." });
 	res.end()
