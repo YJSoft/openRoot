@@ -4,7 +4,8 @@ block content
   ul
     each val in data
       li
-        a(href="/w/#{val}")= val
+        a(href="/w/#{val.page}") val.page
+        p val.content
 block menu
   nav.menu
     a.menu-item(href='/w/#{title}', aria-label='문서의 내용을 읽습니다.') 대문으로
