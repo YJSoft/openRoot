@@ -193,7 +193,59 @@ exports.saveArticle = function(name, ip, wikiText, wikiComment,callback) {
 }
 
 exports.searchArticle = function(squery,callback) {
-	//search article here
+	var wikiPageList = [];
+	var wikiTitleList = [];
+	var wikiPage = new Object();
+	
+	pool.getConnection(function(err, connection) {
+		if(err || typeof connection == "undefined") {
+			callback(502,null);
+		} else {
+			connection.query('select * from `wiki_articles` where `article_title` like ' + connection.escape('%' + squery + '%'),
+			function(err, rows, fields) {
+				rows.forEach(function(page) {
+					if(wikiTitleList.indexOf(page.article_title) < 0) wikiPageList.push(page);
+					wikiTitleList.push(page.article_title);
+					
+				})
+				
+				connection.query('select * from `wiki_articles` where `article_content` like ' + connection.escape('%' + squery + '%'),
+				function(err, rows, fields) {
+					connection.release();
+					
+					rows.forEach(function(page) {
+						if(wikiTitleList.indexOf(page.article_title) < 0) wikiPageList.push(page);
+						wikiTitleList.push(page.article_title);
+					})
+
+					callback(201,wikiPageList);
+				});
+			});
+		}
+	});
+}
+
+exports.gotoArticle = function(squery,callback) {
+	var wikiPageList = [];
+	var wikiPage = new Object();
+	
+	pool.getConnection(function(err, connection) {
+		if(err || typeof connection == "undefined") {
+			callback(502,null);
+		} else {
+			connection.query('select * from `wiki_articles` where `article_hash` = ?',
+			[btoa(unescape(encodeURIComponent(squery)))],
+			function(err, rows, fields) {
+				if(typeof rows[0] != "undefined") {
+					var article = rows[0];
+					
+					callback(200,article.article_title);
+				} else {
+					module.exports.searchArticle(squery,callback);
+				}
+			});
+		}
+	});
 }
 
 exports.getArticleHistory = function(name,callback) {

@@ -33,9 +33,38 @@ router.get('/save', function(req, res) {
 	res.redirect('/w/'+encodeURI(wiki.front))
 });
 
+router.post('/go', function(req, res) {
+	wikiPageHandler.gotoArticle(req.body.name, function(result,wikiPageList) {
+		if(result == 200){
+			res.redirect('/w/'+encodeURI(wikiPageList))
+			res.end()
+			return;
+		} else if(result == 502){
+		    res.status(result);
+		    res.render('error', {
+		      message: "DB서버 연결 실패",
+		      error: {}
+		    });
+		} else {
+			res.status(result).render('search', { data: wikiPageList })
+			res.end()
+		}
+	});
+});
+
 router.post('/search', function(req, res) {
-	res.redirect('/w/'+encodeURI(wiki.front))
-	return;
+	wikiPageHandler.searchArticle(req.body.name, function(result,wikiPageList) {
+		if(result == 502){
+		    res.status(result);
+		    res.render('error', {
+		      message: "DB서버 연결 실패",
+		      error: {}
+		    });
+		} else {
+			res.status(result).render('search', { data: wikiPageList })
+			res.end()
+		}
+	});
 	
 	/*
 	if(wiki.doc[req.body.name]){
@@ -51,6 +80,7 @@ router.post('/search', function(req, res) {
 	res.render('search', { data: dta })
 	*/
 });
+
 router.get('/w/:page', function(req, res, next) {
 	wikiPageHandler.getArticle(req.params.page, function(result,wikiPage) {
 		if(result == 404){
@@ -110,43 +140,6 @@ router.post('/edit/:page', function(req, res) {
 			res.redirect('/w/'+encodeURI(req.params.page));
 		}
 	});
-	
-	/*
-	//if(req.body.title === "GOODBYE-CODE-DELETE-HERE") process.exit(0)
-	var ip = forwarded(req, req.headers).ip;
-	if(!wiki.doc[req.body.title]){
-		wiki.doc[req.body.title] = {
-			canEdit: true,
-			history: [],
-			content: ''
-		}
-	}
-	const bytlenz = Buffer.byteLength(wiki.doc[req.body.title], 'utf8')+Buffer.byteLength(req.body.content, 'utf8')
-	const bytlen = " ("+bytlenz+")"
-	if(!wiki.doc[req.body.title].canEdit) {
-		res.redirect('/w/'+encodeURI(req.params.page));
-		return;
-	}
-	if(wiki.nick[ip]){
-		wiki.doc[req.body.title].history.push(
-			wiki.nick[ip]+bytlen
-		)
-	}else{
-		wiki.doc[req.body.title].history.push(ip+bytlen)
-	}
-	if(!wiki.user[wiki.nick[ip] || ip]){
-		wiki.user[wiki.nick[ip] || ip] = {
-			"lastEdit": ""
-		}
-	}
-	wiki.user[wiki.nick[ip] || ip].lastEdit = req.body.title
-
-	wiki.doc[req.body.title].content = req.body.content
-	if(wiki.doc[req.body.title] !== wiki.doc[req.params.title]){
-		wiki.doc[req.params.title] = null // 문서 이동 기능
-	}
-	res.redirect('/w/'+encodeURI(req.params.page))
-	*/
 });
 
 //일단 지정만 해둠
