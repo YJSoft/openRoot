@@ -1,10 +1,8 @@
-# openNAMU-mysql
-![오픈나무 로고](https://raw.githubusercontent.com/teamatus/openNAMU/master/public/images/on2.png)
-
+# openRoot
 오픈소스 버전 the seed, **openNAMU**의 MySQL 지원 fork입니다. 임시로 [PHP 나무마크 파서](https://github.com/koreapyj/php-namumark)를 이용합니다. 해당하는 소스의 저작권 및 라이선스는 링크된 저장소에서 확인하실 수 있습니다.
 
 ## 설치법
-아직 설치를 지원하지 않습니다. 설치는 master 브랜치의 코드로 해주세요.
+아직 설치를 지원하지 않습니다. 설치는 master 브랜치의 코드로 해주세요. `git checkout master`로 체크아웃할 수 있습니다.
 
 ## TIP / 참고하세요
 * 렌더링 부분은 PHP로 구현되어 있습니다. 따라서 PHP 실행 환경이 필요합니다.(웹서버는 필요치 않습니다)

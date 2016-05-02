@@ -1,5 +1,5 @@
 {
-  "name": "opennamu-mysql",
+  "name": "openroot",
   "version": "0.1.0-alpha",
   "private": true,
   "scripts": {
@@ -21,22 +21,22 @@
     "mysql": "^2.10.2",
     "serve-favicon": "~2.3.0"
   },
-  "description": "![오픈나무 로고](https://raw.githubusercontent.com/teamatus/openNAMU/master/public/images/on2.png)",
+  "description": "openroot is opensource implement of the seed engine.",
   "main": "app.js",
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/YJSoft/openNAMU.git"
+    "url": "git+https://github.com/YJSoft/openRoot.git"
   },
   "keywords": [
-    "opennamu",
+    "openroot",
     "namu",
     "theseed"
   ],
   "author": "Jeon-Sung",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/YJSoft/openNAMU/issues"
+    "url": "https://github.com/YJSoft/openRoot/issues"
   },
-  "homepage": "https://github.com/YJSoft/openNAMU#readme"
+  "homepage": "https://github.com/YJSoft/openRoot#readme"
 }
