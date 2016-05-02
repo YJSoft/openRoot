@@ -33,8 +33,9 @@ router.get('/save', function(req, res) {
 	res.redirect('/w/'+encodeURI(wiki.front))
 });
 
-router.post('/go', function(req, res) {
-	wikiPageHandler.gotoArticle(req.body.name, function(result,wikiPageList) {
+// go to article. if article not exist, show search page
+router.get('/go/:page', function(req, res) {
+	wikiPageHandler.gotoArticle(req.params.page, function(result,wikiPageList) {
 		if(result == 200){
 			res.redirect('/w/'+encodeURI(wikiPageList))
 			res.end()
@@ -46,14 +47,19 @@ router.post('/go', function(req, res) {
 		      error: {}
 		    });
 		} else {
-			res.status(result).render('search', { data: wikiPageList })
+			res.redirect('/search/'+encodeURI(req.params.page))
 			res.end()
+			return;
 		}
 	});
 });
 
-router.post('/search', function(req, res) {
-	wikiPageHandler.searchArticle(req.body.name, function(result,wikiPageList) {
+var searchFunc = function(req, res) {
+	var name;
+	if(typeof req.body.name != "undefined") name = req.body.name;
+	else if(typeof req.params.page != "undefined") name = req.params.page;
+	else name = "";
+	wikiPageHandler.searchArticle(name, function(result,wikiPageList) {
 		if(result == 502){
 		    res.status(result);
 		    res.render('error', {
@@ -65,21 +71,10 @@ router.post('/search', function(req, res) {
 			res.end()
 		}
 	});
-	
-	/*
-	if(wiki.doc[req.body.name]){
-		res.redirect('/w/'+encodeURI(req.body.name))
-		return;
-	}
-	var dta = []
-	for(var property in wiki.doc){
-		if(property.includes(req.body.name) || (wiki.doc[property] && wiki.doc[property].content.includes(req.body.name))){
-			dta.push(property)
-		}
-	}
-	res.render('search', { data: dta })
-	*/
-});
+}
+
+router.get('/search/:page', searchFunc);
+router.post('/search', searchFunc);
 
 router.get('/w/:page', function(req, res, next) {
 	wikiPageHandler.getArticle(req.params.page, function(result,wikiPage) {

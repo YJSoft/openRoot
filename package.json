@@ -19,6 +19,7 @@
     "jsonfile": "^2.3.0",
     "morgan": "~1.6.1",
     "mysql": "^2.10.2",
+    "pug": "^2.0.0-alpha6",
     "serve-favicon": "~2.3.0"
   },
   "description": "openroot is opensource implement of the seed engine.",

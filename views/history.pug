@@ -1,0 +1,22 @@
+extends wiki
+block content
+  h1= title
+  table(border='1')
+    thead
+      tr
+        th(style="padding:10px") 번호
+        th(style="padding:10px") 코멘트
+        th(style="padding:10px") 편집자
+    tbody
+    each val in history
+      tr
+        th(style="padding:10px")
+          a(href="/w/" + val.page + "/" + val.rev_id)= "r" + val.rev
+        th(style="padding:10px")= val.comment
+        th(style="padding:10px")= val.ip
+block menu
+  nav.menu
+    a.menu-item(href='/w/' + title, aria-label='문서의 내용을 읽습니다.') 문서보기
+    a.menu-item(href='/edit/' + title, aria-label='관리자만 가능합니다.') 수정하기
+    a.menu-item.selected(href='#', onclick='return false', aria-label="문서의 역사를 확인합니다.") 역사보기
+    a.menu-item(href='/showall', aria-label="모든 문서의 목록을 봅니다.") 문서목록

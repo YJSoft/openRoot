@@ -108,82 +108,77 @@ exports.saveArticle = function(name, ip, wikiText, wikiComment,callback) {
 			result.error = err;
 			callback(result);
 		} else {
-			connection.query('select * from `wiki_articles` where `article_hash` = ' + connection.escape(btoa(unescape(encodeURIComponent(name)))), function(err, rows, fields) {
-				var article = rows[0];
-				
-				if(typeof article != "undefined") {
-					var wikiCommands = article.article_etc_info.match(/wikiPage\.([a-zA-Z_\-]+)=([a-zA-Z_\-]+);/g);
-				
-					wikiCommands.forEach(function(wikiCommand) {
-						try {
-						    eval(wikiCommand);
-						} catch (e) {
-						    console.log(name + "'s article_etc_info contains invalid info - " + wikiCommand);
-						}
-					})
-				
-					if(!wikiPage.canEdit) {
-						result.code = 403;
-						result.message = "권한 없음";
-						result.error = new Object();
-						result.error.status = "문서 편집 권한이 없습니다.";
-						result.error.stack = "";
-						connection.release();
-						callback(result);
-					}
-				}
-				
-				var query = '';
-				var queryArgs = [];
-				
-				connection.query('SELECT MAX(article_num) as revision FROM wiki_articles',function(err, rows, fields) {
-					var article_num = rows[0].revision + 1;
+			var query = '';
+			var queryArgs = [];
 			
-					connection.query('SELECT MAX(revision_num) as revision FROM wiki_revision',function(err, rows, fields) {
-						var revision = rows[0].revision + 1;
+			connection.query('SELECT MAX(article_num) as revision FROM wiki_articles union SELECT MAX(revision_num) as revision FROM wiki_revision;',function(err, rows, fields) {
+				var article_num = rows[0].revision + 1;
+				var revision = rows[1].revision + 1;
 				
-						if(typeof article == "undefined") {
-							//article create
-							var article = new Object();
-							article.article_num = article_num;
-							article.article_title = name;
-							article.article_hash = btoa(unescape(encodeURIComponent(name)));
-							
-							query = 'insert into `wiki_articles` (`article_num`,`revision_num`,`article_title`,`article_hash`,`article_content`,`article_last_ip`,`article_etc_info`) values (?,?,?,?,?,?,?)';
-							queryArgs = [article.article_num, revision, article.article_title, article.article_hash, wikiText, ip, 'wikiPage.canEdit=true;wikiPage.canMove=true;wikiPage.canDelete=true;'];
+				connection.query('select * from `wiki_articles` where `article_hash` = ' + connection.escape(btoa(unescape(encodeURIComponent(name)))), function(err, rows, fields) {
+					var article = rows[0];
+				
+					if(typeof article == "undefined") {
+						//article create
+						var article = new Object();
+						article.article_num = article_num;
+						article.article_title = name;
+						article.article_hash = btoa(unescape(encodeURIComponent(name)));
+					
+						query = 'insert into `wiki_articles` (`article_num`,`revision_num`,`article_title`,`article_hash`,`article_content`,`article_last_ip`,`article_etc_info`) values (?,?,?,?,?,?,?)';
+						queryArgs = [article.article_num, revision, article.article_title, article.article_hash, wikiText, ip, 'wikiPage.canEdit=true;wikiPage.canMove=true;wikiPage.canDelete=true;'];
+					} else {
+						var wikiCommands = article.article_etc_info.match(/wikiPage\.([a-zA-Z_\-]+)=([a-zA-Z_\-]+);/g);
+				
+						wikiCommands.forEach(function(wikiCommand) {
+							try {
+							    eval(wikiCommand);
+							} catch (e) {
+							    console.log(name + "'s article_etc_info contains invalid info - " + wikiCommand);
+							}
+						});
+				
+						if(!wikiPage.canEdit) {
+							result.code = 403;
+							result.message = "권한 없음";
+							result.error = new Object();
+							result.error.status = "문서 편집 권한이 없습니다.";
+							result.error.stack = "";
+							connection.release();
+							callback(result);
 						} else {
 							//article edit
 							query = 'update `wiki_articles` set `revision_num` = ?, `article_content` = ?, `article_last_ip` = ? where `article_hash` = ?';
 							queryArgs = [revision, wikiText, ip, btoa(unescape(encodeURIComponent(name)))];
 						}
-				
-						connection.query(query,
-						queryArgs,
+					}
+		
+					connection.query(query,
+					queryArgs,
+					function(err, rows, fields) {
+						if(err) {
+							result.code = 500;
+							result.message = "MySQL article ERROR"
+							result.error = err;
+							connection.release();
+							callback(result);
+						}
+						connection.query('insert into wiki_revision (`revision_num`,`revision_article_num`,`revision_title`,`revision_hash`,`revision_content`,`revision_comment`,`revision_ip`) values (?,?,?,?,?,?,?)',
+						[revision, article.article_num, article.article_title, article.article_hash, wikiText, wikiComment, ip],
 						function(err, rows, fields) {
+		
 							if(err) {
 								result.code = 500;
-								result.message = "MySQL article ERROR"
+								result.message = "MySQL revision ERROR";
 								result.error = err;
 								connection.release();
 								callback(result);
+							} else {
+								result.code = 200;
+								result.message = "success";
+								connection.release();
+								callback(result);
 							}
-							connection.query('insert into wiki_revision (`revision_num`,`revision_article_num`,`revision_title`,`revision_hash`,`revision_content`,`revision_comment`,`revision_ip`) values (?,?,?,?,?,?,?)',
-							[revision, article.article_num, article.article_title, article.article_hash, wikiText, wikiComment, ip],
-							function(err, rows, fields) {
-				
-								if(err) {
-									result.code = 500;
-									result.message = "MySQL revision ERROR";
-									result.error = err;
-									connection.release();
-									callback(result);
-								} else {
-									result.code = 200;
-									result.message = "success";
-									connection.release();
-									callback(result);
-								}
-							});
 						});
 					});
 				});
@@ -241,7 +236,7 @@ exports.gotoArticle = function(squery,callback) {
 					
 					callback(200,article.article_title);
 				} else {
-					module.exports.searchArticle(squery,callback);
+					callback(404,null);
 				}
 			});
 		}
