@@ -20,7 +20,8 @@
     "morgan": "~1.6.1",
     "mysql": "^2.10.2",
     "pug": "^2.0.0-alpha6",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "uglify-js": ">=2.6.2"
   },
   "description": "openroot is opensource implement of the seed engine.",
   "main": "app.js",
