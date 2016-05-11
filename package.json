@@ -7,6 +7,7 @@
     "debug": "node ./bin/www --debug"
   },
   "dependencies": {
+    "uglify-js": ">=2.6.2",
     "atob": "^2.0.3",
     "body-parser": "~1.13.2",
     "btoa": "^1.1.2",
@@ -20,8 +21,7 @@
     "morgan": "~1.6.1",
     "mysql": "^2.10.2",
     "pug": "^2.0.0-alpha6",
-    "serve-favicon": "~2.3.0",
-    "uglify-js": ">=2.6.2"
+    "serve-favicon": "~2.3.0"
   },
   "description": "openroot is opensource implement of the seed engine.",
   "main": "app.js",
