@@ -16,7 +16,6 @@
     "exec-php": "0.0.3",
     "express": "~4.13.1",
     "forwarded-for": "^1.0.1",
-    "jade": "~1.11.0",
     "jsonfile": "^2.3.0",
     "morgan": "~1.6.1",
     "mysql": "^2.10.2",
