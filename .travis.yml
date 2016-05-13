@@ -1,4 +1,10 @@
 language: node_js
+services:
+  - mysql
+before_install:
+	- mysql -e 'create database openRoot;'
+	- mysql -uroot openRoot < ./mysql/openRoot.sql
+	- mv wiki.default.json wiki.json
 node_js:
   - "5"
   - "5.1"
