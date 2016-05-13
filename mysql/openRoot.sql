@@ -40,8 +40,7 @@ CREATE TABLE `wiki_articles` (
   KEY `idx_article_title` (`article_title`),
   KEY `idx_article_last_ip` (`article_last_ip`),
   KEY `idx_article_hash` (`article_hash`),
-  KEY `idx_revision_num` (`revision_num`),
-  FULLTEXT KEY `idx_article_content` (`article_content`)
+  KEY `idx_revision_num` (`revision_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `wiki_articles` WRITE;
@@ -76,7 +75,6 @@ CREATE TABLE `wiki_revision` (
   KEY `idx_revision_ip` (`revision_ip`),
   KEY `idx_article_num` (`revision_article_num`),
   KEY `idx_revision_hash` (`revision_hash`),
-  FULLTEXT KEY `idx_revision_content` (`revision_content`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `wiki_revision` WRITE;
