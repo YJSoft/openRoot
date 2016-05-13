@@ -180,7 +180,7 @@ router.get('/w/:page/:revision', function(req, res) {
 			res.status(result).render('index', { pagetitle: "시스템 오류 :: " + wiki.name, title: req.params.page, content: "DB서버 연결 실패" });
 			res.end()
 		} else {
-			parseNamu(wikiPage.content, (cnt) => {
+			parseNamu(wikiPage.content, function(cnt) {
 				res.status(result).render('index', { pagetitle: wikiPage.title + "(버전 " + req.params.revision + ") :: " + wiki.name, title: wikiPage.title, content: cnt });
 				res.end()
 			});
