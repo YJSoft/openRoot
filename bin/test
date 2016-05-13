@@ -89,6 +89,7 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  process.exit(0);
 }
 process.on('exit', function(){
 
