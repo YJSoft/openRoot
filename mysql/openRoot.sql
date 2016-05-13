@@ -74,7 +74,7 @@ CREATE TABLE `wiki_revision` (
   KEY `idx_revision_title` (`revision_title`),
   KEY `idx_revision_ip` (`revision_ip`),
   KEY `idx_article_num` (`revision_article_num`),
-  KEY `idx_revision_hash` (`revision_hash`),
+  KEY `idx_revision_hash` (`revision_hash`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 LOCK TABLES `wiki_revision` WRITE;
